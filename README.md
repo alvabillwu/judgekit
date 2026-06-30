@@ -120,6 +120,24 @@ criteria:
 
 The YAML parser is a built-in minimal subset (no PyYAML dependency); plain JSON is also accepted.
 
+### Multi-judge ensembling
+
+Combine several judges' scores — useful when no single judge is reliable:
+
+```python
+from judgekit import ensemble_score_items, judge_agreement, MockJudge, OverlapJudge, KeywordJudge
+
+result = ensemble_score_items(
+    rubric, items,
+    judges=[MockJudge(), OverlapJudge(), KeywordJudge(["paris", "capital"])],
+    strategy="agreement",  # mean | median | majority | agreement
+)
+print(result.mean_score)
+print(judge_agreement(result.per_judge))  # inter-judge agreement metrics
+```
+
+Strategies: `mean`, `median`, `majority` (fraction of judges passing), `agreement` (mean down-weighted by disagreement). The ensemble implements `JudgeBackend`, so it composes with the rest of the library.
+
 ## Roadmap
 
 - [x] Rubrics + weighted aggregation (continuous + ordinal scales)
@@ -127,7 +145,9 @@ The YAML parser is a built-in minimal subset (no PyYAML dependency); plain JSON 
 - [x] Calibration vs ground truth
 - [x] Rubric YAML/JSON file format
 - [x] CLI: `judgekit score` / `calibrate` / `judges`
-- [ ] Multi-judge ensembling (majority / mean / agreement-filtered)
+- [x] Multi-judge ensembling (mean / median / majority / agreement-weighted)
+
+**v1.0 — feature-complete.** Future: more judges, rubric presets, web UI.
 
 ## Development
 

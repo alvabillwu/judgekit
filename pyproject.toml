@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "judgekit"
-version = "0.2.0"
-description = "A reusable LLM-as-judge harness — rubrics (YAML/JSON), pluggable judges, cheap proxy metrics, and calibration against ground truth."
+version = "1.0.0"
+description = "A reusable LLM-as-judge harness — rubrics (YAML/JSON), pluggable judges, cheap proxy metrics, multi-judge ensembling, and calibration against ground truth."
 authors = [{name = "alvabillwu", email = "alvabill@outlook.com"}]
 license = {text = "MIT"}
 readme = "README.md"
