@@ -84,14 +84,50 @@ score_items(rubric, items, LLMJudge(model="gpt-4o-mini"))
 
 The rubric never knows which judge scored it, so you can A/B a proxy against an LLM judge on the identical rubric.
 
+## CLI
+
+```bash
+# Score items against a rubric (see examples/qa.yaml + examples/items.jsonl)
+judgekit score examples/qa.yaml examples/items.jsonl --judge mock
+judgekit score examples/qa.yaml examples/items.jsonl --judge overlap --json
+
+# Calibrate a judge against ground-truth labels
+judgekit calibrate examples/qa.yaml examples/items.jsonl --truth truth.json --judge mock
+
+# List available judges
+judgekit judges
+```
+
+`items.jsonl` is one JSON object per line: `{"id", "content", "question"?, "reference"?}`.
+`truth.json` is `{"item_id": score_in_0..1}`.
+
+## Rubric files (YAML or JSON)
+
+```yaml
+name: qa-quality
+criteria:
+  - name: relevance
+    description: Does it answer the question?
+    weight: 2.0
+  - name: groundedness
+    description: Is it supported by the reference?
+    weight: 2.0
+    scale: {max: 5, ordinal: true}   # Likert 1..5, auto-normalized
+  - name: fluency
+    description: Is it well-written?
+    weight: 1.0
+```
+
+The YAML parser is a built-in minimal subset (no PyYAML dependency); plain JSON is also accepted.
+
 ## Roadmap
 
 - [x] Rubrics + weighted aggregation (continuous + ordinal scales)
 - [x] Mock + LLM judges + 3 proxy judges
 - [x] Calibration vs ground truth
-- [ ] CLI: `judgekit score <rubric.yaml> <items.jsonl> --judge mock|llm`
+- [x] Rubric YAML/JSON file format
+- [x] CLI: `judgekit score` / `calibrate` / `judges`
 - [ ] Multi-judge ensembling (majority / mean / agreement-filtered)
-- [ ] Rubric YAML format
 
 ## Development
 

@@ -1,0 +1,13 @@
+# Example rubric for a Q&A quality judge.
+name: qa-quality
+criteria:
+  - name: relevance
+    description: Does the answer directly address the question?
+    weight: 2.0
+  - name: groundedness
+    description: Is the answer supported by the reference?
+    weight: 2.0
+    scale: {max: 5, ordinal: true}
+  - name: fluency
+    description: Is the answer well-written and clear?
+    weight: 1.0

@@ -19,8 +19,9 @@ from .rubric import score_item, score_items, RubricResult
 from .judges import MockJudge, LLMJudge, get_judge
 from .proxy import LengthJudge, OverlapJudge, KeywordJudge
 from .calibration import calibrate, CalibrationReport
+from .rubric_file import load_rubric, rubric_from_dict, parse_yaml
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __all__ = [
     "Rubric",
     "Criterion",
@@ -40,4 +41,7 @@ __all__ = [
     "KeywordJudge",
     "calibrate",
     "CalibrationReport",
+    "load_rubric",
+    "rubric_from_dict",
+    "parse_yaml",
 ]
